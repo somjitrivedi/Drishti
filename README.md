@@ -84,17 +84,6 @@ remote_write:
 
 `samples` is an append-only rowid table on purpose. A `(ref, ts)` primary key dirties one B-tree page per active series on every commit, and in testing it fell from 116k to about 20k rows/sec as the table grew. Ordering and dedup live in the head instead. Phase 2 compacts these rows into Gorilla-compressed chunks.
 
-## Phase 0-1 results
-
-Measured on a Windows 11 laptop. The load generator ran on the same machine. Data is 10,000 series of realistic counters, gauges and latencies, with fsync on.
-
-| Run | Result |
-| --- | --- |
-| Remote-write, 50k samples/sec target, 60 s, plus 2k log lines/sec | **49,955 samples/sec sustained**, 3.0M samples and 120k log lines, 0 failures, p50 60 ms, p99 234 ms, mean SQLite commit 4.7 ms |
-| NDJSON, 50k samples/sec target, 20 s | 49,867 samples/sec, 0 failures |
-| Remote-write, 100k target, 8 connections, 20k series | 62k samples/sec peak on this machine |
-| `kill -9` during concurrent writes, then restart | every acknowledged batch present (test/crash.test.ts) |
-
 ## Layout
 
 ```
