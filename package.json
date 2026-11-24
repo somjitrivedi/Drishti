@@ -1,0 +1,38 @@
+{
+  "name": "drishti",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-hosted observability platform: metrics, logs and alerts for small teams",
+  "type": "module",
+  "bin": {
+    "drishti": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "db:migrate": "tsx src/cli.ts migrate",
+    "db:seed": "tsx src/cli.ts seed",
+    "dev": "tsx watch src/cli.ts serve",
+    "serve": "tsx src/cli.ts serve",
+    "loadgen": "tsx src/cli.ts loadgen",
+    "drishti": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "12.11.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^24.19.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.1"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "esbuild@0.28.2": true
+  }
+}
